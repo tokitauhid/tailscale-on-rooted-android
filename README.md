@@ -24,6 +24,18 @@ This project transforms a rooted Android device (OnePlus 6T) into a permanent, "
 
 ---
 
+## 🧪 Tested On
+
+| Component | Version |
+| :--- | :--- |
+| **Device** | OnePlus 6T |
+| **ROM** | crDroid 10 (Android 14) |
+| **Magisk** | v30.7 (latest) |
+| **Tailscaled Module** | v2.0.0.1 (latest) |
+| **MagiskSSH** | Latest |
+
+---
+
 ## 🛠 Installation
 
 ### 1. Prerequisites
@@ -47,10 +59,10 @@ tailscale up --advertise-routes=192.168.0.0/24,<ISP_SUB_IP> --advertise-exit-nod
 
 - Follow the URL provided in the output to log in.
 - In the **Tailscale Admin Console**:
-- Find your Android device.
-- Go to **Edit Route Settings**.
-- Enable all advertised subnets and the Exit Node toggle.
-- Select **Disable Key Expiry** to ensure the connection never drops.
+  - Find your Android device.
+  - Go to **Edit Route Settings**.
+  - Enable all advertised subnets and the Exit Node toggle.
+  - Select **Disable Key Expiry** to ensure the connection never drops.
 
 ### 4. Battery Protection (ACCA)
 To prevent battery degradation while the phone is plugged in 24/7:
@@ -58,6 +70,23 @@ To prevent battery degradation while the phone is plugged in 24/7:
 - Set the **Stop Charging** limit to `75%`.
 - Set the **Start Charging** limit to `70%`.
 - Apply the settings (this will automatically install the necessary `acc` Magisk module).
+
+---
+
+## ✅ Verifying the Setup
+
+After a reboot, confirm the gateway is running:
+
+**Option A — Via SSH:**
+```bash
+ssh root@<your-phone-tailscale-ip> -p 22
+tailscale status
+```
+You should see your device listed as active with the advertised subnets.
+
+**Option B — Via Tailscale Admin Console:**
+- Open the [Tailscale Admin Console](https://login.tailscale.com/admin/machines).
+- Your Android device should appear as **Connected**.
 
 ---
 
@@ -87,16 +116,18 @@ If you need to browse the web as if you were at home:
 > **Why Magisk over the Play Store App?**
 > Standard Android apps are subject to "Battery Optimization." Even with "Don't Optimize" checked, Android may kill the process during low memory states. The Magisk module runs at the system level (daemon), making it invisible to the Android task killer.
 
-> [!TIP] Remote Scrcpy
+> [!TIP]
+> **Remote Scrcpy**
+>
 > Mirror your phone's screen over the VPN by following these steps:
-> 
+>
 > **1. Enable ADB over TCP/IP (Run via SSH on the phone)**
 > ```bash
 > setprop service.adb.tcp.port 5555
 > stop adbd
 > start adbd
 > ```
-> 
+>
 > **2. Connect and Launch (Run on your computer)**
 > ```bash
 > adb connect <your-phone-tailscale-ip>:5555
