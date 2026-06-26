@@ -30,8 +30,8 @@ This project transforms a rooted Android device (OnePlus 6T) into a permanent, "
 | :--- | :--- |
 | **Device** | OnePlus 6T |
 | **ROM** | crDroid 10 (Android 14) |
-| **Magisk** | v30.7 (latest) |
-| **Tailscaled Module** | v2.0.0.1 (latest) |
+| **Magisk** | v30.7 |
+| **Tailscaled Module** | v2.0.0.1 |
 | **MagiskSSH** | Latest |
 
 ---
